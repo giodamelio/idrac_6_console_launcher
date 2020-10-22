@@ -1,3 +1,5 @@
 require('dotenv').config();
 
-console.log(process.env);
+const logger = require('signale');
+
+logger.info('Hello World!');

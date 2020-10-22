@@ -58,13 +58,18 @@ async function main() {
         ctx.page = await ctx.browser.newPage();
         await ctx.page.setViewport({ width: 1366, height: 768 });
         // eslint-disable-next-line no-underscore-dangle
-        await ctx.page._client.send('Page.setDownloadBehavior', { behavior: 'allow', downloadPath: './downloads' });
+        await ctx.page._client.send('Page.setDownloadBehavior', {
+          behavior: 'allow',
+          downloadPath: './downloads',
+        });
       },
     },
     {
       title: 'Load iDRAC login page',
       task: async (ctx) => {
-        await ctx.page.goto(process.env.IDRAC_URL, { waitUntil: 'networkidle0' });
+        await ctx.page.goto(process.env.IDRAC_URL, {
+          waitUntil: 'networkidle0',
+        });
         await ctx.page.waitForSelector('.login_header_idrac');
       },
     },
@@ -85,7 +90,10 @@ async function main() {
     {
       title: 'Get the correct iFrame',
       task: async (ctx) => {
-        ctx.frame = ctx.page.mainFrame().childFrames().find((frame) => frame.url().includes('sysSummaryData.html'));
+        ctx.frame = ctx.page
+          .mainFrame()
+          .childFrames()
+          .find((frame) => frame.url().includes('sysSummaryData.html'));
       },
     },
     waitSelector('#remoteConLaunch_link', 'frame'),

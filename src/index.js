@@ -8,6 +8,7 @@ const puppeteer = require('puppeteer');
 const Listr = require('listr');
 const rmfr = require('rmfr');
 const xml2js = require('xml2js');
+const nunjucks = require('nunjucks');
 // const execa = require('execa');
 
 function screenshots() {
@@ -110,12 +111,12 @@ async function main() {
         await ctx.page.waitForTimeout(2000);
       },
     },
-    {
-      title: 'Logout of iDRAC',
-      task: async (ctx) => {
-        await ctx.page.evaluate('f_logout()');
-      },
-    },
+    // {
+    //   title: 'Logout of iDRAC',
+    //   task: async (ctx) => {
+    //     await ctx.page.evaluate('f_logout()');
+    //   },
+    // },
     {
       title: 'Closing Chrome',
       task: async (ctx) => {
@@ -154,6 +155,27 @@ async function main() {
       task: async (ctx) => {
         const xmlData = await xml2js.parseStringPromise(ctx.file);
         ctx.argument = xmlData.jnlp['application-desc'][0].argument;
+      },
+    },
+    {
+      title: 'Render batch file',
+      task: async (ctx) => {
+        const args = ctx.argument
+          .map((arg) => {
+            return `"${arg}"`;
+          })
+          .join(' ');
+        const outputBatchFile = nunjucks.render(
+          path.resolve(__dirname, '../template.bat'),
+          {
+            args,
+          },
+        );
+
+        await fs.writeFile(
+          path.resolve(__dirname, '../launch.bat'),
+          outputBatchFile,
+        );
       },
     },
   ]);

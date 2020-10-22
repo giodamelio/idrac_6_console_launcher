@@ -22,6 +22,7 @@
     "dotenv": "^8.2.0",
     "execa": "^4.0.3",
     "listr": "^0.14.3",
+    "nunjucks": "^3.2.2",
     "puppeteer": "^5.3.1",
     "rmfr": "^2.0.0",
     "signale": "^1.4.0",

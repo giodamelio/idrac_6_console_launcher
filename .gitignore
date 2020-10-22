@@ -6,5 +6,7 @@ node_modules/
 
 screenshots/*
 downloads/*
+jre/*
 !screenshots/.gitkeep
 !downloads/.gitkeep
+!jre/.gitkeep

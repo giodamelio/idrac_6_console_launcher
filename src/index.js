@@ -7,6 +7,7 @@ const logger = require('signale');
 const puppeteer = require('puppeteer');
 const Listr = require('listr');
 const rmfr = require('rmfr');
+const xml2js = require('xml2js');
 // const execa = require('execa');
 
 function screenshots() {
@@ -151,7 +152,8 @@ async function main() {
     {
       title: 'Parse the XML',
       task: async (ctx) => {
-        logger.info(ctx.file);
+        const xmlData = await xml2js.parseStringPromise(ctx.file);
+        ctx.argument = xmlData.jnlp['application-desc'][0].argument;
       },
     },
   ]);

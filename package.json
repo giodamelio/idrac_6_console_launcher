@@ -24,7 +24,8 @@
     "listr": "^0.14.3",
     "puppeteer": "^5.3.1",
     "rmfr": "^2.0.0",
-    "signale": "^1.4.0"
+    "signale": "^1.4.0",
+    "xml2js": "^0.4.23"
   },
   "devDependencies": {
     "eslint": "^7.2.0",

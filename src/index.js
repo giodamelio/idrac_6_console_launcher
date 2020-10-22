@@ -1,5 +1,8 @@
 require('dotenv').config();
 
+const fs = require('fs/promises');
+const path = require('path');
+
 const logger = require('signale');
 const puppeteer = require('puppeteer');
 const Listr = require('listr');
@@ -128,6 +131,29 @@ async function main() {
     //     logger.info(stdout);
     //   },
     // },
+    {
+      title: 'Read the jnlp file',
+      task: async (ctx) => {
+        const files = await fs.readdir(
+          path.resolve(__dirname, '../downloads/'),
+        );
+        // Weird issue where Prettier and ESLint conflict
+        // eslint-disable-next-line arrow-body-style
+        const jnlpFilename = files.find((file) => {
+          return file.startsWith('viewer.jnlp');
+        });
+        ctx.file = await fs.readFile(
+          path.resolve(__dirname, '../downloads/', jnlpFilename),
+          'utf8',
+        );
+      },
+    },
+    {
+      title: 'Parse the XML',
+      task: async (ctx) => {
+        logger.info(ctx.file);
+      },
+    },
   ]);
 
   await tasks.run();

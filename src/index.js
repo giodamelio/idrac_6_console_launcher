@@ -4,6 +4,7 @@ const logger = require('signale');
 const puppeteer = require('puppeteer');
 const Listr = require('listr');
 const rmfr = require('rmfr');
+// const execa = require('execa');
 
 function screenshots() {
   let count = 0;
@@ -117,6 +118,16 @@ async function main() {
         await ctx.browser.close();
       },
     },
+    // One day we will actuall start the shell...
+    // {
+    //   title: 'Check the version of the JRE',
+    //   task: async () => {
+    //     const { stdout } = await execa(process.env.IDRAC_JRE_JAVA_PATH, [
+    //       '--version',
+    //     ]);
+    //     logger.info(stdout);
+    //   },
+    // },
   ]);
 
   await tasks.run();

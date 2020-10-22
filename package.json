@@ -20,6 +20,7 @@
   "homepage": "https://github.com/giodamelio/idrac_6_console_launcher#readme",
   "dependencies": {
     "dotenv": "^8.2.0",
+    "execa": "^4.0.3",
     "listr": "^0.14.3",
     "puppeteer": "^5.3.1",
     "rmfr": "^2.0.0",
